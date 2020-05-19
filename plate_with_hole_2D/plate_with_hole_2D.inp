@@ -1,0 +1,31 @@
+*INCLUDE, INPUT=nodes.msh
+*INCLUDE, INPUT=ps.msh
+*INCLUDE, INPUT=xfix.nam 
+*INCLUDE, INPUT=yfix.nam 
+*INCLUDE, INPUT=press.sur 
+
+*BOUNDARY
+Nxfix,1,1
+Nyfix,2,2
+
+*ELSET,ELSET=Eall
+Eps
+
+*MATERIAL,NAME=Steel
+*ELASTIC
+2.1E5,.3
+
+*SOLID SECTION,ELSET=Eps,MATERIAL=Steel
+1
+
+*STEP, NLGEOM
+*STATIC
+*DSLOAD
+Spress, P, -100
+*NODE PRINT,NSET=Nall
+U
+*EL PRINT,ELSET=Eall
+S
+*EL FILE
+U,S
+*END STEP

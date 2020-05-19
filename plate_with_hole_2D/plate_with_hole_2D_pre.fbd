@@ -1,0 +1,175 @@
+#
+## Two-dimensional plate with hole.
+## 
+#
+
+
+#
+## Geometry.
+#
+
+valu r 10 # Radius of the hole.
+valu a 20 # Side lenght of square.
+valu lenght 600 # Lenght of the rectangle.
+valu width 300 # Width of the rectangle.
+
+# Set elementy type.
+valu Etyp qu4s
+
+# Set line divisions.
+valu ld1 20
+valu ld2 20
+valu ld3 30
+valu ld4 30
+
+# Set bias values for lines.
+valu bias1 5
+valu bias2 10
+valu bias3 10
+
+
+
+valu sqc cos 45
+valu sqxy * r sqc
+
+# Create nodes.
+pnt p1 0 0 0
+pnt p2 r 0 0
+pnt p3 sqxy sqxy 0
+pnt p4 0 r 0
+pnt p5 a 0 0
+pnt p6 a a 0
+pnt p7 0 a 0
+pnt p8 lenght 0 0
+pnt p9 lenght a 0
+pnt p10 lenght width 0
+pnt p11 a width 0
+pnt p12 0 width 0
+
+# Plot all nodes.
+plot pa all
+
+# Create lines with divisions.
+line l1 p2 p3 p1
+line l2 p3 p4 p1
+div l1 ld1
+div l2 ld1
+line l3 p2 p5 ld2
+line l4 p3 p6 ld2
+line l5 p4 p7 ld2
+line l6 p5 p6 ld1
+line l7 p6 p7 ld1
+line l8 p11 p12 ld1
+line l9 p8 p9 ld1
+line l10 p5 p8 ld3
+line l11 p6 p9 ld3
+line l12 p11 p10 ld3
+line l13 p7 p12 ld4
+line l14 p6 p11 ld4
+line l15 p9 p10 ld4
+
+# Apply bias on certain lines.
+bia l3 bias1
+bia l4 bias1
+bia l5 bias1
+
+bia l10 bias2
+bia l11 bias2
+bia l12 bias2
+
+bia l13 bias3
+bia l14 bias3
+bia l15 bias3
+
+# Rotate view.
+rot -z
+
+# Plot line
+plus ld all
+
+# Create line sets to be used in surface crreation.
+seta s1_lines l l1 l3 l6 l4
+seta s2_lines l l2 l4 l7 l5
+seta s3_lines l l6 l9 l10 l11
+seta s4_lines l l7 l8 l13 l14
+seta s5_lines l l11 l12 l14 l15
+# Create surfaces.
+surf s1_surf s1_lines
+surf s2_surf s2_lines
+surf s3_surf s3_lines
+surf s4_surf s4_lines
+surf s5_surf s5_lines
+
+# Make sure that all surfaces share the common normal direction.
+flip s1_surf auto
+
+# Contain all surfaces in a set.
+seta surf_all s all
+
+# Plot all surfaces with IDs.
+plus sa all
+
+
+#
+## Meshing.
+#
+
+# Assign element type to sets.
+elty surf_all Etyp
+
+# Mesh the geometry.
+mesh all
+# Mesh is plotted.
+view elem
+plot m all
+
+
+# Store all nodes in a set.
+seta nodes n all
+# Boundary condition nodes are selected from the set containing all nodes and stored in sets.
+enq nodes xfix rec 0 _ 0 0.001
+enq nodes yfix rec _ 0 0 0.001
+
+# Node sets containing boundary condition nodes are written to files.
+send xfix abq nam
+send yfix abq nam
+
+
+# Export loading surface information to a file.
+seta press l l9 l15
+comp press do
+comp press do
+send press abq sur
+
+
+# All nodal information is exported to a file.
+send nodes abq
+
+# Elemental information is exported to a file.
+seta ps e surf_all
+send ps abq
+
+
+# Save image of the mesh model with BCs.
+rot -z
+ulin x-sym. (green), y-sym. (red), loading (blue).
+view elem
+plot f all t
+plus n xfix r 10 
+plus n yfix g 10
+plus n press b 10
+frame
+hcpy png pre
+
+
+# Save a close-up image of the hole mesh
+ulin Hole close-up.
+zoom 30
+tra u 138
+tra l -288
+view elem
+plot f all t
+plus p all k 1
+view elem
+plus p all k 1
+hcpy png hole_zoom

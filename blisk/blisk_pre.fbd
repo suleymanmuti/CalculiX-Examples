@@ -1,0 +1,86 @@
+#
+##
+### Bladed disk 2D stress analysis with axisymmetric and plane stress elements.
+##
+#
+
+
+#
+## Geometry.
+#
+
+valu ri 100 # Bore radius.
+valu re 400 # Hub radius.
+valu R 660 # Tip radius.
+valu h 10 # Thickness of the disk.
+
+# Set calculated values
+valu hh  * h 0.5 # Half of the disk thickness.
+valu hm  * h -1 # Sweep vector through the disk's thickness.
+
+# Set divisions.
+valu divl1 60 # Division on line 1, i.e., axisymmetric portion.
+valu divl2 44 # Division on line 2, i.e., plane stress portion.
+valu divy 8 # Division through the disk's thickness.
+
+
+# Element type parameterization.
+valu axisEtyp qu8cr # Eight-node axisymmetric element with reduced integration.
+valu psEtyp qu8sr # Eight-node plane stress element with reduced integration.
+# valu axisEtyp qu4c # Four-node axisymmetric element.
+# valu psEtyp qu4s # Four-node plane stress element.
+
+
+# Define points.
+pnt p1 ri hh 0
+pnt p2 re hh 0
+pnt p3 R hh 0
+
+# Define lines with divisions.
+line l1 p1 p2 divl1
+line l2 p2 p3 divl2
+
+# Create a set that contains line to be swept into the next higher dimension.
+seta lines l l1 l2
+
+# Form 2D surfaces.
+swep lines sweplines tra 0 hm 0 divy
+
+plot pa all
+plus la all
+plus sa all
+
+# Create a surface that contains axisymmetric surface, i.e., the disk.
+seta axisurf s A001
+# Create a surface that contains plane stress surface, i.e., blades.
+seta psurf s A002
+
+
+#
+## Meshing.
+#
+
+# Assign element type.
+elty axisurf axisEtyp
+elty psurf psEtyp
+
+# Mesh the geometry.
+mesh all
+# Mesh is plotted.
+plot m all
+
+
+# All nodes are stored in a set.
+seta nodes n all
+# Boundary condition nodes are selected from the all nodes and stored in a set.
+enq nodes fix rec ri hh 0 0.001 a
+
+# Node set containing boundary condition nodes are written to a file.
+send fix abq nam
+send nodes abq
+
+seta axi e axisurf
+send axi abq
+seta ps e psurf
+send ps abq
+

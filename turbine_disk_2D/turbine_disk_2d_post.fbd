@@ -1,0 +1,48 @@
+# Read the finite element solution data.
+read turbine_disk_2d.frd
+
+# Geometry.
+valu r_bore 92.05
+valu r_hub 173
+valu r_tip 190
+valu w_bore 11.95
+
+valu w_bore_m * w_bore -1
+
+valu pr 190 # Sampling points for the radial plot.
+valu pa 50 # Sampling points for the axial plot at bore.
+
+# Create nodes.
+pnt p1 r_bore 0 0
+pnt p2 r_tip 0 0
+
+# Create lines to be used in path plot.
+line l1 p1 p2 pr
+
+# Add path lines to sets.
+seta pathr l1
+
+# Set view orientation.
+rot -z
+rot c 90
+
+# Select a dataset to be plotted.
+ds 2 e 1
+# Plot the dataset in graph.
+graph pathr lenght +
+plot fv all
+hcpy png radial_stress
+
+# Select a dataset to be plotted.
+ds 2 e 3
+# Plot the dataset in graph.
+graph pathr lenght +
+plot fv all
+hcpy png hoop_stress
+
+# Select a dataset to be plotted.
+ds 1 e 1
+# Plot the dataset in graph.
+graph pathr lenght +
+plot fv all
+hcpy png radial_displacement

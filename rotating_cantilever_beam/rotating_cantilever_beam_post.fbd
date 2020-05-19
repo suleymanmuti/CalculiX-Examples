@@ -1,0 +1,13 @@
+# Read the finite element solution data.
+read rotating_cantilever_beam.frd
+
+# Rotate view.
+rot -z
+
+# Save image of the finite element results.
+ulin Mode 1 displacements in z-axis.
+ds 1 e 3
+plot fv all
+frame
+hcpy png
+sys mv hcpy_1.png mode1_z_disp.png

@@ -1,0 +1,25 @@
+*INCLUDE, INPUT=all.msh 
+*INCLUDE, INPUT=fix.nam 
+
+*MATERIAL,NAME=EL
+*ELASTIC
+2.17E5,0.3
+*DENSITY
+7.85e-9
+
+
+*SOLID SECTION, Material=EL, Elset=Eall
+
+*STEP,NLGEOM
+    *STATIC
+    *BOUNDARY
+    Nfix,1,3
+    *DLOAD
+    Eall,CENTRIF,222067.133758,0.,0.,0.,1.,0.,0.
+    *END STEP
+*STEP,PERTURBATION
+    *FREQUENCY
+        5
+    *EL FILE
+        U
+    *END STEP

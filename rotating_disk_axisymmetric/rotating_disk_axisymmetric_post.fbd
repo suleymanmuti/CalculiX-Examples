@@ -1,0 +1,37 @@
+# Read the finite element solution data.
+read rotating_disk_axisymmetric.frd
+
+# Geometry.
+valu ri 28 # Inner radius of the disk.
+valu re 125 # Outer radius of the disk.
+valu h 4 # Width of th disk.
+
+valu hh * w 0.5
+
+valu t 40 # Sampling points of the plot.
+
+# Create nodes.
+pnt p1 ri hh 0
+pnt p2 re hh 0
+
+# Create line to be used in path plot.
+line l1 p1 p2 t
+
+# Create a set thet contains the line to be used in path plot.
+seta path l1
+
+# Select a dataset to be plotted.
+ds 2 e 1
+# Plot the dataset in graph.
+graph path lenght +
+
+# Select a dataset to be plotted.
+ds 2 e 3
+# Plot the dataset in graph.
+graph path lenght +
+
+
+# Select a dataset to be plotted.
+ds 1 e 1
+# Plot the dataset in graph.
+graph path lenght +

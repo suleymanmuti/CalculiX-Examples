@@ -1,0 +1,73 @@
+#
+## Rotating disk axisymmetric stress analysis. 
+##
+#
+
+
+#
+## Geometry.
+#
+
+valu ri 28 # Inner radius of the disk.
+valu ro 125 # Outer radius of the disk.
+valu h 4 # Width of the disk.
+
+valu len - ro ri # Height of the disk cross-section, i.e., ro-ri.
+
+valu dy 8 # Division on x axis.
+valu dx 64 # Division on z axis.
+
+# Element type parameterization.
+valu Etyp qu8cr
+
+
+# Create nodes.
+pnt p1 ri 0 0
+pnt p2 ri h 0
+# Plot all nodes.
+plot pa all
+
+# Create line.
+line l1 p1 p2 dy
+# Plot line
+plus la all
+
+# Create a set that contains line to be swept into the next higher dimension.
+seta lines l l1
+# Axisymmetric disk, 2D.
+swep lines sweplines tra len 0 0 dx
+
+
+
+#
+## Meshing.
+#
+
+# Element type is assigned to all entities.
+elty all Etyp
+# Mesh the geometry.
+mesh all
+# Mesh is plotted.
+plot m all
+
+# All nodes are stored in a set.
+seta nodes n all
+# Boundary condition nodes are selected from the all nodes and stored in a set.
+enq nodes fix rec ri h 0 0.001 a
+
+# Node set containing boundary condition nodes are written to a file.
+send fix abq nam
+
+# Finite element model (nodes and elements) are written to a file.
+send all abq
+
+
+rot -z
+ulin FE model of the rotating hollow disk (green). Boundary conditions (red).
+view elem
+plot f all g
+plus n fix 6
+frame
+hcpy png
+sys mv hcpy_1.png pre.png
+

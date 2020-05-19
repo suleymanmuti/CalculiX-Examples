@@ -1,0 +1,41 @@
+# Read the finite element solution data.
+read plate_with_hole_3D.frd
+
+# Geometry.
+valu r 10 # Radius of the hole.
+valu a 20 # Side lenght of square.
+valu lenght 600 # Lenght of the rectangle.
+valu width 300 # Width of the rectangle.
+valu th 10 # Thickness of the plate
+
+valu sp 40 # Sampling points of the plot.
+
+rot -z
+
+# Create nodes.
+pnt p4 0 r 0
+pnt p12 0 width 0
+
+# Create line to be used in path plot.
+line pl p4 p12 sp
+
+# Create a set thet contains the line to be used in path plot.
+seta path pl
+
+# Select a dataset to be plotted.
+ds 2 e 1
+# Plot the dataset in graph.
+graph path lenght +
+
+# Save a close-up image of the hole mesh
+ulin Hole close-up.
+zoom 25
+tra u -110
+tra l -205
+rot l 45
+rot d 60
+view elem
+plus p all k 1
+view elem
+plus p all k 1
+hcpy png results_hole_zoom
