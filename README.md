@@ -35,5 +35,10 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
   title="2D Turbine Disk">
 ](turbine_disk_2D) 
 
+[<img
+  src="turbine_disk_3D\images\hoop_stress.png"
+  height="250"
+  title="3D Turbine Disk">
+](turbine_disk_3D) 
 
 
