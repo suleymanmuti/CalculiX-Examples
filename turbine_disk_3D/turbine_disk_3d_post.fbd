@@ -1,0 +1,95 @@
+# Read the finite element solution data.
+read turbine_disk_3d.frd
+
+
+#
+## Geometry.
+#
+
+valu r_bore 92.05
+valu r_hub 173
+valu r_tip 190
+valu w_bore 11.95
+valu w_flange 28.75
+valu w_bore_m * w_bore -1
+
+valu pr 99 # Sampling points for the radial plot.
+
+# Create nodes.
+pnt p1 r_bore 0 0
+pnt p2 r_hub 0 0
+pnt p3 w_flange 0 0
+
+
+# Create lines to be used in path plot.
+line l1 p1 p2 pr
+
+# Add path lines to sets.
+seta pathr l1
+
+
+#
+## Save images.
+#
+
+# Set view orientation.
+rot -y
+rot c 90
+rot u 30
+
+# Select a dataset to be plotted.
+ds 2 e 3
+# Transform reults into cylindrical coordinate system around the global y axis.
+trfm cyl y
+
+# Plot hoop stresses.
+# Select a dataset to be plotted.
+ds 2 e 3
+# Transform reults into cylindrical coordinate system around the global y axis.
+trfm cyl y
+ulin Hoop stress plot.
+frame
+# Plot the dataset in graph.
+# graph pathr lenght +
+plot fv all
+hcpy png hoop_stress
+
+# Plot radial stresses.
+# Select a dataset to be plotted.
+ds 2 e 1
+# Transform reults into cylindrical coordinate system around the global y axis.
+trfm cyl y
+ulin Radial stress plot.
+frame
+view edge k
+plot fv all
+hcpy png radial_stress
+
+
+# Plot von Mises stresses.
+# Select a dataset to be plotted.
+ds 2 e 7
+# Transform reults into cylindrical coordinate system around the global y axis.
+trfm cyl y
+ulin von Mises stress plot.
+frame
+view edge k
+plot fv all
+hcpy png von_mises_stress
+
+
+frame
+view elem
+zoom 10
+tra d 32
+ulin Close-up view of the hoop stress plot near the slot.
+# Plot the close-up view of the hoop stresses.
+# Select a dataset to be plotted.
+ds 2 e 3
+# Transform reults into cylindrical coordinate system around the global y axis.
+trfm cyl y
+view elem
+plot fv all
+# Plot the dataset in graph.
+hcpy png slot_hoop_stress
+

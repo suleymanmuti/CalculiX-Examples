@@ -1,0 +1,415 @@
+##
+### Three-dimensional cyclic symmetry stress analysis of a turbine disk.
+#
+
+
+#
+## Geometry.
+#
+
+valu r_bore 92.05
+valu r_t_bore 99.1835
+valu r_arm 112
+valu r_web 123.81061
+valu r_flange 130
+valu r_rim 161 
+valu r_hub 169.28301
+valu r_tip 190
+valu f_rim 4
+valu f_web 20
+valu w_bore 11.95
+valu w_web 2
+valu w_tip 6
+valu w_flange 28.75
+valu t_arm 1.075
+valu t_flange 4.4
+valu a_bore 22
+valu numer_of_blades 24
+valu rota1 1.5
+
+# Element type parameterization.
+valu cEtyp he8  # 3D continuum element type.
+# Element order parameterization. 0 - Linear elements, 1 - Quadratic elements.
+valu qor 0
+
+# Line divisions.
+valu div1 6
+valu div2 6
+valu div3 6
+valu div4 4
+valu div5 6
+valu div6 24
+valu div7 12
+valu div8 6
+valu div9 6
+valu div10 12
+valu div11 10
+valu div12 4
+valu div13 6
+valu diva1 4
+valu diva2 18
+valu div14 10
+valu div15 12
+valu bia1 5
+
+# Derived dimensions.
+valu r_arm_o + r_arm t_arm
+valu w_bore_m * w_bore -1
+valu w_web_m * w_web -1
+valu w_tip_m * w_tip -1
+valu d_w_tip * w_tip 2
+valu t_flange_m * t_flange -1
+valu w_flange_i + w_flange t_flange_m
+valu r_t_bore_m * r_t_bore -1
+valu t_bore + r_arm r_t_bore_m
+valu tan_a tan a_bore
+valu t_bore_tan_a * t_bore tan_a
+valu t_bore_tan_a_m * t_bore_tan_a -1
+valu w_arm1 + w_bore t_bore_tan_a_m
+valu w_arm1_m * w_arm1 -1
+valu t + t_bore t_arm
+valu t_tan_a * t tan_a
+valu t_tan_a_m * t_tan_a -1
+valu w_arm2 + w_bore t_tan_a_m
+valu w_arm2_m * w_arm2 -1
+valu f_rim_m * f_rim -1
+valu r_f_rim + r_rim f_rim_m
+valu w_tip_h * 0.5 w_tip
+valu w_tip_h_m * -1 w_tip_h
+valu r_f_rim_h + r_f_rim w_tip_h
+valu r_f_rim_sq + r_f_rim w_tip
+valu d_div1 * 2 div1
+valu ddiv1 int d_div1
+valu d_div7 * 2 div7
+valu ddiv7 int d_div7
+valu sector_angle / 360 numer_of_blades
+valu half_sector_angle * 0.5 sector_angle
+valu half_sector_angle_m * -1 half_sector_angle
+valu rota2 - half_sector_angle rota1
+valu rota1_m * rota1 -1
+valu rota2_m * rota2 -1
+valu comp_a_hi + 90 half_sector_angle
+valu comp_a_lo - 90 half_sector_angle
+
+# Define points.
+pnt p0 0 w_tip_m 0
+pnt p1 r_bore w_bore_m 0
+pnt p2 r_bore w_bore 0
+pnt p3 r_t_bore w_bore_m 0
+pnt p4 r_t_bore w_bore 0
+pnt p5 r_arm w_arm1_m 0
+pnt p6 r_arm w_arm1 0
+pnt p7 r_arm_o w_arm2_m 0
+pnt p8 r_arm_o w_arm2 0
+pnt p9 r_web w_web_m 0
+pnt p10 r_web w_web 0
+pnt p11 r_f_rim w_web_m 0
+pnt p12 r_f_rim w_web 0
+pnt p13 r_rim w_tip_m 0
+pnt p14 r_rim w_tip 0
+pnt p15 r_hub w_tip_m 0
+pnt p16 r_hub w_tip 0
+pnt p17 r_tip w_tip_m 0
+pnt p18 r_tip w_tip 0
+pnt p19 r_arm w_flange_i 0
+pnt p20 r_arm w_flange 0
+pnt p21 r_arm_o w_flange_i 0
+pnt p22 r_arm_o w_flange 0
+pnt p23 r_flange w_flange_i 0
+pnt p24 r_flange w_flange 0
+pnt p25 r_f_rim w_tip_m 0
+pnt p26 r_f_rim w_tip 0
+pnt p27 r_f_rim 0 0
+pnt p28 r_f_rim_h w_tip_h_m 0
+pnt p29 r_f_rim_h w_tip_h 0
+pnt p30 r_f_rim_sq w_tip_m 0
+pnt p31 r_f_rim_sq 0 0
+pnt p32 r_f_rim_sq w_tip 0
+pnt p33 169.28301 w_tip_m 0
+pnt p34 173.00000 w_tip_m 0
+pnt p35 174.48236 w_tip_m 1.93185
+pnt p36 175.00000 w_tip_m 0
+pnt p37 189.90321 w_tip_m 6.06386
+pnt p38 188.37452 w_tip_m 24.79998
+pnt p39 167.83477 w_tip_m 22.09587
+pnt p40 173.41329 w_tip_m 1.21752
+pnt p41 189.75502 w_tip_m 9.64527
+pnt p42 172.12294 w_tip_m 22.66041
+pnt p43 169.22500 w_tip_m 4.43131
+pnt p44 173.52033 w_tip_m 5.52219
+
+# Define lines with divisions.
+line l1 p1 p2 ddiv1
+line l2 p1 p3 div2
+line l3 p2 p4 div2
+line l4 p3 p4 ddiv1
+line l5 p3 p5 div3
+line l6 p4 p6 div3
+line l7 p5 p6 ddiv1
+line l8 p5 p7 div4
+line l9 p8 p6 div4
+line l10 p7 p8 ddiv1
+line l11 p7 p9 div5
+line l12 p8 p10 div5
+line l13 p9 p10 ddiv1
+line l14 p9 p11 div6
+line l15 p10 p12 div6
+line l16 p11 p27 div1
+line l17 p11 p28 p25 div7
+line l18 p12 p29 p26 div7
+line l19 p15 p30 div8
+line l20 p16 p32 div8
+line l21 p15 p16 ddiv7
+line l22 p15 p17 div9
+line l23 p16 p18 div9
+line l24 p17 p18 ddiv7
+line l25 p19 p6 div11
+line l26 p19 p20 div12
+line l27 p19 p21 div4
+line l28 p20 p22 div4
+line l29 p21 p8 div11
+line l30 p21 p22 div12
+line l31 p21 p23 div13
+line l32 p22 p24 div13
+line l33 p23 p24 div12
+
+# Create arc between given two lines.
+fil l11 l14 f_web
+fil l12 l15 f_web
+
+line l34 D002 D004
+
+# Set line divisions.
+div L001 div7
+div L002 div7
+div l34 ddiv1
+
+# Creale lines.
+line l35 p27 p12 div1
+line l36 p27 p31 div7
+line l37 p28 p13 p25 div7
+line l38 p29 p14 p26 div7
+line l39 p13 p30 div1
+line l40 p28 p31 div1
+line l41 p29 p31 div1
+line l42 p14 p32 div1
+line l43 p30 p31 div7
+line l44 p31 p32 div7
+
+# create lines.
+line l45 p34 p33 div14
+line l46 p34 p40 p36
+line l47 p40 p35 p36
+line l48 p35 p37 div15
+line l49 p37 p41 p0
+line l50 p41 p38 p0
+line l51 p38 p42 div15
+line l52 p42 p39 diva1
+line l53 p39 p43 p0
+line l54 p43 p33 p0
+line l55 p40 p43 div14
+line l56 p35 p44 div14
+line l57 p44 p42 p0
+line l58 p43 p44 diva1
+line l59 p41 p44 div15
+
+# Line divisions.
+div l46 diva1
+div l47 diva1
+div l49 div14
+div l50 diva2
+div l53 diva2
+div l54 diva1
+div l57 diva2
+
+# Line biases.
+bia l45 bia1
+bia l49 bia1
+bia l55 bia1
+bia l56 bia1
+
+# Line set definitions.
+seta lset1 l l1 l2 l3 l4
+seta lset2 l l4 l5 l6 l7
+seta lset3 l l7 l8 l9 l10
+seta lset4 l l10 l11 l12 l13
+seta lset5 l l34 l14 l15 l16 l35
+seta lset6 l l43 l44 l19 l20 l21
+seta lset7 l l21 l22 l23 l24
+seta lset8 l l9 l25 l27 l29
+seta lset9 l l26 l27 l28 l30
+seta lset10 l l30 l31 l32 l33
+seta lset11 l L001 L002 l13 l34
+seta lset12 l l16 l17 l40 l36
+seta lset13 l l35 l18 l36 l41
+seta lset14 l l37 l39 l43 l40
+seta lset15 l l38 l41 l44 l42
+seta lset16 l l45 l46 l54 l55
+seta lset17 l l47 l55 l56 l58
+seta lset18 l l48 l49 l56 l59
+seta lset19 l l50 l51 l57 l59
+seta lset20 l l52 l53 l57 l58
+
+# Create surfaces based on line sets.
+surf s1 lset1
+surf s2 lset2
+surf s3 lset3
+surf s4 lset4
+surf s5 lset5
+surf s6 lset6
+# surf s7 lset7
+surf s8 lset8
+surf s9 lset9
+surf s10 lset10
+surf s11 lset11
+surf s12 lset12
+surf s13 lset13
+surf s14 lset14
+surf s15 lset15
+surf s16 lset16
+surf s17 lset17
+surf s18 lset18
+surf s19 lset19
+surf s20 lset20
+
+# Make sure that all surfaces share a common direction.
+flip s1 auto
+
+# Surface set definitions for meshhing.
+seta axisurf s s1 s2 s3 s4 s5 s6 s8 s9 s10 s11 s12 s13 s14 s15
+seta blasurf s s16 s17 s18 s19 s20
+
+# Copy surfaces at angles.
+copy axisurf axisurfa rot y rota1_m
+copy axisurfa axisurfc rot y rota2_m
+
+# Sweep the axisymmetric portion around y-axis to obtain solid disk section.
+swep axisurf secta rot y rota1_m diva1
+swep axisurfa sectb rot y rota2_m diva2
+
+# Sweep blade portion inthe axial direction.
+swep blasurf sectc tra 0  d_w_tip 0 ddiv7 a
+
+# Contain all boadies in a set.
+seta sect b all
+
+
+#
+## Meshing.
+#
+
+# Element type is assigned to surfaces.
+elty sect cEtyp
+
+# Mesh the geometry.
+mesh all
+
+# If the condition is true, convert to quadratic.
+if qor == 1
+mids all gen
+endif
+
+# Reflect mesh about center plane.
+copy sect sect mir z
+
+# Merge all close nodes.
+merg n all
+
+# All nodes are stored in a set.
+seta nodes n all
+
+# Cyclic symmetry nodes are selected from the all nodes and stored in sets.
+enq nodes hi cy _ comp_a_hi _ 0.1 a
+enq nodes lo cy _ comp_a_lo _ 0.1 a
+
+# Node sets containing Cyclic symmetry nodes are written to files.
+send hi abq nam
+send lo abq nam
+
+# Select nodes to be removed from BC nodes.
+enq nodes rem1 cy _ comp_a_hi w_flange 0.1 a
+enq nodes rem2 cy _ comp_a_lo w_flange 0.1 a
+
+# Boundary condition nodes are selected from the all nodes and stored in a set.
+enq nodes fix rec _ w_flange _ 0.001 a
+# Remove cyclic tie nodes from BC nodes.
+setr fix n rem1 rem2
+
+# Node set containing boundary condition nodes are written to a file.
+send fix abq nam
+
+# Export nodal information to a file.
+send nodes abq
+
+# Export elemental information to a file.
+seta c3d e sect
+send c3d abq
+
+
+#
+## Save images.
+#
+
+# Set view settings.
+rot -y
+rot c 90
+rot r 30
+rot u 30
+
+# Save image of the mesh model.
+ulin Geometry.
+view elem off
+frame
+view edge k
+plot f all g
+frame
+hcpy png geo
+
+# Save image of the mesh model.
+ulin Finite element model.
+view elem
+frame
+view edge off
+plot f all g
+frame
+hcpy png pre
+
+# Save image of the boundary conditions.
+ulin Boundary conditions. Zero axial displacement (red).
+view elem off
+frame
+view edge k
+plot f all g
+plus n fix r 6
+frame
+hcpy png BCs
+
+# Plot settings.
+# Plot invisible point
+seta dp p p27
+plot p dp k 1
+
+# Save image of the cyclic symmetry boundaries.
+ulin Cyclic symmetry boundaries. Low (blue), High(green).
+frame
+view edge k
+plus n hi g 12
+plus n lo b 12
+frame
+hcpy png cyclic_boundaries
+
+# Set view settings.
+view elem
+rot -y
+rot c 90
+zoom 5
+tra d 40
+ulin Close-up view of the slot.
+plot f all g
+plus  p dp k 1
+hcpy png slot
+
+# Plot settings.
+frame
+rot r 30
+rot u 30
