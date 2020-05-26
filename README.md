@@ -18,7 +18,6 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
   height="300"
   title="Rotating Cantilever Beam">
 ](rotating_cantilever_beam) 
-
 [<img
   src="rotating_disk_axisymmetric\images\rotating_disk_axisymmetric.png"
   height="250"
@@ -34,7 +33,6 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
   height="250"
   title="2D Turbine Disk">
 ](turbine_disk_2D) 
-
 [<img
   src="turbine_disk_3D\images\hoop_stress.png"
   height="250"
