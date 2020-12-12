@@ -1,0 +1,84 @@
+#
+## Rotating disk plane stress analysis. 
+##
+#
+
+
+#
+## Geometry.
+#
+
+VALU ri 28 # Inner radius of the disk.
+VALU re 125 # Outer radius of the disk.
+VALU h 4 # Width of the disk.
+
+VALU dy 60 # Division on y axis.
+VALU dc 60 # Division on circumference.
+
+# Element type parameterization.
+VALU Etyp qu4sr
+
+
+# Create points.
+PNT p1 0 ri 0
+PNT p2 0 re 0
+PNT z1 0 0 0
+PNT z2 0 0 1
+
+# Plot all nodes.
+PLOT pa all
+
+# Create line.
+LINE L1 p1 p2 dy
+
+# Add line to plot.
+PLUS la all
+
+# Create a set that contains line to be swept into the next higher dimension.
+SETA lines l L1
+# Weep to obtain 2D plane disk portion.
+SWEP lines sweplines ROT z1 z2 -60 dc
+
+
+#
+## Meshing.
+#
+
+# Element type is assigned to all entities.
+ELTY all Etyp
+# Mesh the geometry.
+MESH all
+# Mesh is plotted.
+PLOT m all
+
+# Convert all elements to second order.
+MIDS all gen
+
+# All nodes are stored in a set.
+SETA nodes n all
+# Boundary condition nodes are selected from the all nodes and stored in sets.
+ENQ nodes x_symm rec 0 _ 0 0.001 a
+ENQ nodes c_symm cz _ 30 _ 0.001 a
+ENQ nodes nri rec 0 ri _ 0.001 a
+ENQ nodes nre rec 0 re _ 0.001 a
+
+# Node sets containing boundary condition nodes are written to files.
+SEND x_symm abq nam
+SEND c_symm abq nam
+SEND nri abq nam
+SEND nre abq nam
+
+# Finite element model (nodes and elements) are written to a file.
+SEND all abq
+
+# Plot FE model, BCs, and save an image.
+ROT -z
+ulin FE model of the rotating hollow disk (green). Symmetry boundary conditions (blue).
+VIEW elem
+PLOT f all g
+PLUS n x_symm b 6
+PLUS n c_symm b 6
+FRAME
+hcpy png
+sys mv hcpy_1.png pre.png
+

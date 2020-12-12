@@ -1,0 +1,69 @@
+# Read the finite element solution data.
+READ rotating_disk_plane_stress.frd
+
+# Geometry.
+VALU ri 28 # Inner radius of the disk.
+VALU re 125 # Outer radius of the disk.
+VALU h 4 # Width of the disk.
+
+VALU hh * w 0.5
+
+VALU t 97 # Sampling points of the plot.
+
+# Create points.
+PNT p1 0 ri 0
+PNT p2 0 re 0
+
+# Create line to be used in path plot.
+LINE L1 p1 p2 t
+
+# Create a set thet contains the line to be used in path plot.
+seta path L1
+
+#
+## Save images.
+#
+
+# Set view orientation.
+ROT -z
+
+# Select a dataset to be plotted.
+ds 2 e 1
+# Transform results into cylindrical coordinates.
+TRFM cyl z
+
+# Select a dataset to be plotted.
+ds 2 e 1
+# Transform results into cylindrical coordinates.
+TRFM cyl z
+
+ulin Radial stress plot.
+FRAME
+# Plot the dataset in graph.
+GRAPH path lenght +
+PLOT fv all
+HCPY png radial_stress
+
+# Select a dataset to be plotted.
+ds 2 e 3
+# Transform results into cylindrical coordinates.
+TRFM cyl z
+
+ulin Hoop stress plot.
+FRAME
+# Plot the dataset in graph.
+GRAPH path lenght +
+PLOT fv all
+HCPY png hoop_stress
+
+ulin Radial displacement plot.
+FRAME
+# Select a dataset to be plotted.
+ds 1 e 1
+# Transform results into cylindrical coordinates.
+TRFM cyl z
+PLOT fv all
+FRAME
+# Plot the dataset in graph.
+GRAPH path lenght +
+HCPY png radial_displacement
