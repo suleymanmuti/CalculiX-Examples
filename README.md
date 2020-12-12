@@ -22,7 +22,7 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
 [<img
   src="rotating_disk_axisymmetric\images\rotating_disk_axisymmetric.png"
   height="250"
-  title="Rotating Hollow Disk">
+  title="Rotating Hollow Disk with Axisymmetric Elements">
 ](rotating_disk_axisymmetric) 
 [<img
   src="blisk\images\blisk_with_given_parameters.png"
@@ -40,5 +40,11 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
   height="250"
   title="3D Turbine Disk">
 ](turbine_disk_3D) 
+
+[<img
+  src="rotating_disk_plane_stress\images\radial_stress.png"
+  height="250"
+  title="Rotating Hollow Disk with Plane Stress Elements">
+](rotating_disk_plane_stress) 
 
 
