@@ -5,23 +5,23 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
 
 [<img
   src="plate_with_hole_2D\images\results_hole_zoom.png"
-  height="200"
+  height="250"
   title="2D Plate with Hole in Tension">
 ](plate_with_hole_2D)
 [<img
   src="plate_with_hole_3D\images\results_hole_zoom.png"
-  height="200"
+  height="250"
   title="3D Plate with Hole in Tension">
 ](plate_with_hole_3D)
 [<img
   src="rotating_cantilever_beam\images\rotating_cantilever_beam.png"
-  height="200"
+  height="300"
   title="Rotating Cantilever Beam">
 ](rotating_cantilever_beam)
 
 [<img
   src="rotating_disk_axisymmetric\images\rotating_disk_axisymmetric.png"
-  height="200"
+  height="250"
   title="Rotating Hollow Disk with Axisymmetric Elements">
 ](rotating_disk_axisymmetric) 
 [<img
@@ -31,19 +31,19 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
 ](blisk) 
 [<img
   src="turbine_disk_2D\images\radial_stress.png"
-  height="200"
+  height="250"
   title="2D Turbine Disk">
 ](turbine_disk_2D)
 
 [<img
   src="turbine_disk_3D\images\hoop_stress.png"
-  height="200"
+  height="250"
   title="3D Turbine Disk">
 ](turbine_disk_3D) 
 
 [<img
   src="rotating_disk_plane_stress\images\radial_stress.png"
-  height="200"
+  height="250"
   title="Rotating Hollow Disk with Plane Stress Elements">
 ](rotating_disk_plane_stress) 
 
@@ -51,7 +51,7 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
 
 [<img
   src="beam_steady_state_dynamics\images\beamdy3d.png"
-  height="200"
+  height="250"
   title="Beam Steady State Dynamics Analysis">
 ](beam_steady_state_dynamics) 
 
