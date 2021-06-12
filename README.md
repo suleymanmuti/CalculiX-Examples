@@ -53,5 +53,5 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
   src="beam_steady_state_dynamics\images\beamdy3d.png"
   height="250"
   title="Beam Steady State Dynamics Analysis">
-](rotating_disk_plane_stress) 
+](beam_steady_state_dynamics) 
 
