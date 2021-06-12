@@ -1,0 +1,106 @@
+#
+## Steady state dynamics analysis of cantilever beam with 3D continuum elements.
+##
+#
+
+
+#
+## Geometry.
+#
+
+valu len 250 # Lenght of the flat plate.
+valu w 100 # Width of the flat plate.
+valu t 10 # Thickness of the flat plate.
+valu r 1000 # Radius of the rigid wheel.
+
+valu alpha 0 # Orientation of the plate
+
+valu dt 4 # Division on thickness t.
+valu dlen 32 # Division on lenght len.
+valu dw 8 # Division on width w.
+
+# Set the elementy type.
+valu Etyp he8r
+
+# Set calculated values
+valu p1x * t -0.5
+valu p1z * w -0.5
+valu p2x * t -0.5
+valu p2z * w 0.5
+valu tr + r len
+
+# Create points.
+pnt p1 p1x r p1z
+pnt p2 p2x r p2z
+# Plot all nodes.
+plot pa all
+
+# Create line.
+line l1 p1 p2 dw
+# Plot line
+plus la all
+
+# Create a set that contains line to be swept into the next higher dimension.
+seta lines l l1
+# Base surface of the flat plate.
+swep lines sweplines tra t 0 0 dt
+# Create a set that contains surface to be swept into the next higher dimension.
+seta surfaces s A001
+# Body of flat plate, 3D geometry.
+swep surfaces swepsurfaces tra 0 len 0 dlen
+
+
+#
+## Meshing.
+#
+
+# Element type is assigned to all entities.
+elty all Etyp
+# Mesh the geometry.
+mesh all
+# Mesh is plotted.
+plot m all
+
+# Mesh is rotated to reflect plate orientation.
+move all rot y alpha
+
+# Convert elements to second degree by generating mid nodes.
+mids all gen
+
+# All nodes are stored in a set.
+seta nodes n all
+# Boundary condition nodes are selected from the all nodes and stored in a set.
+enq nodes fix rec _ r _ 0.001 a
+# Loading nodes are selected from the all nodes and stored in a set.
+enq nodes fn rec p1x tr 0 0.001 a
+# Displacement response nodes are selected from the all nodes and stored in a set.
+enq nodes dres rec 0 tr 0 0.001 a
+# Stress response nodes are selected from the all nodes and stored in a set.
+enq nodes sres rec p1x r 0 0.001 a
+
+# Node set containing boundary condition nodes are written to a file.
+send fix abq nam
+# Node set containing loading nodes are written to a file.
+send fn abq nam
+# Node set containing response nodes are written to a file.
+send dres abq nam
+send sres abq nam
+
+# Finite element model (nodes and elements) are written to a file.
+send all abq
+
+
+# Save image of the mesh model with BCs.
+rot x
+ulin FE model of the cantilever beam subject to harmonic loading at the tip.
+view elem
+frame
+plot f all g
+plus n fix 6
+plus n fn b 6 
+plus n dres k 6 
+plus n sres m 6 
+frame
+hcpy png
+sys mv hcpy_1.png cantilever_beam.png
+
