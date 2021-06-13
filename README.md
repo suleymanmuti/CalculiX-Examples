@@ -53,5 +53,5 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
   src="steady_state_dynamics\beam_harmonic\images\beamdy3d.png"
   height="250"
   title="Steady State Dynamics">
-](beam_harmonic) 
+](steady_state_dynamics) 
 
