@@ -50,7 +50,7 @@ Following are my CalculiX studies. The examples contain pre-processing scripts f
 
 
 [<img
-  src="beam_harmonic\images\beamdy3d.png"
+  src="steady_state_dynamics\beam_harmonic\images\beamdy3d.png"
   height="250"
   title="Steady State Dynamics">
 ](beam_harmonic) 
