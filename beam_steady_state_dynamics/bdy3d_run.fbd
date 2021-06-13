@@ -1,8 +1,0 @@
-sys cgx -b bdy3d_pre.fbd
-sys ccx bdy3d
-read bdy3d.frd
-read bdy3d.inp nom
-ds 1 e 1
-graph Ndres time DISP D1
-ds 4 e 1
-graph Nsres time PSTRESS PS1
