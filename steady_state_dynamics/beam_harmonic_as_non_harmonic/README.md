@@ -1,7 +1,7 @@
 # Cantilever Beam Subjected to Harmonic Loading at the Tip
 
-Harmonic loading at the tip of the cantilever beam is applied as nonharmonic periodic loading.
-*STEADY STATE DYNAMICS,HARMONIC=NO
+Harmonic loading at the tip of the cantilever beam is applied as nonharmonic periodic loading.<br/>
+*STEADY STATE DYNAMICS, HARMONIC=NO
 
 ### Files
 File| Contents|                        
